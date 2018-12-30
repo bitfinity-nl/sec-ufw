@@ -1,0 +1,25 @@
+---
+  # Tasks: Configure UFW for Ubuntu 16.04
+
+  - name: "check if ufw is installed, otherwise skipping"
+    stat:
+     path: /etc/ufw
+    register: ufw_active
+
+  - name: "install ufw package"
+    apt:
+     name: ufw
+     state: present
+    when: ufw_active.stat.exists == False
+
+  - name: "4.1 Allow incoming SSH traffic from Ansible on port 22/tcp"
+    ufw:
+     rule: limit
+     port: ssh
+     proto: tcp
+
+  - name: "Enable UFW and deny all traffic"
+    ufw:
+     state: enabled
+     policy: deny
+     logging: yes
