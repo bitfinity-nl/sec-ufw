@@ -1,25 +1,31 @@
 ---
-  # Tasks: Configure UFW for Ubuntu 16.04
+# Tasks: Configure UFW for Ubuntu 16.04
+#
+# Author: Bitfinity-NL
+# File: tasks/ubuntu-16.04-amd64.yml
+#
+# Description:
+#   Enable UFW
 
-  - name: "check if ufw is installed, otherwise skipping"
-    stat:
-     path: /etc/ufw
+- name: "check if ufw is installed, otherwise skipping"
+  stat:
+    path: /etc/ufw
     register: ufw_active
 
-  - name: "install ufw package"
-    apt:
-     name: ufw
-     state: present
+- name: "install ufw package"
+  apt:
+    name: ufw
+    state: present
     when: ufw_active.stat.exists == False
 
-  - name: "4.1 Allow incoming SSH traffic from Ansible on port 22/tcp"
-    ufw:
-     rule: limit
-     port: ssh
-     proto: tcp
+- name: "Allow incoming SSH traffic from Ansible on port 22/tcp"
+  ufw:
+    rule: limit
+    port: 'ssh'
+    proto: tcp
 
-  - name: "Enable UFW and deny all traffic"
-    ufw:
-     state: enabled
-     policy: deny
-     logging: yes
+- name: "Enable UFW and deny all traffic"
+  ufw:
+    state: enabled
+    policy: deny
+    logging: on

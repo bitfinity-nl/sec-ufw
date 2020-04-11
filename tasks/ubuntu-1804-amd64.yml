@@ -1,26 +1,26 @@
 ---
-  # Tasks: Configure UFW for Ubuntu 18.04
-  #
-  # Author: Luc Rutten
-  # Version: 1.0
-  # File: tasks/ubuntu-18.04-amd64.yml
-  #
-  # Description:
-  #   Enable UFW
+# Tasks: Configure UFW for Ubuntu 18.04
+#
+# Author: Bitfinity-NL
+# File: tasks/ubuntu-18.04-amd64.yml
+#
+# Description:
+#   Enable UFW
 
-  - name: "install ufw package"
-    apt:
-      name: ufw
-      state: present
+- name: "install ufw package"
+  apt:
+    name: ufw
+    state: present
 
-  - name: "4.1 Allow incoming SSH traffic from Ansible on port 22/tcp"
-    ufw:
-      rule: limit
-      port: ssh
-      proto: tcp
+- name: "Allow incoming SSH traffic from Ansible on port 22/tcp"
+  ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
 
-  - name: "Enable UFW and deny all traffic"
-    ufw:
-      state: enabled
-      policy: deny
-      logging: yes
+- name: "Enable UFW and deny all traffic"
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+    logging: "on"
