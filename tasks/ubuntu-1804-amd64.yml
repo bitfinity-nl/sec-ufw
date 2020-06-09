@@ -14,9 +14,8 @@
 
 - name: "Allow incoming SSH traffic from Ansible on port 22/tcp"
   ufw:
-    rule: limit
-    port: ssh
-    proto: tcp
+    rule: allow
+    name: OpenSSH
 
 - name: "Enable UFW and deny all traffic"
   ufw:
